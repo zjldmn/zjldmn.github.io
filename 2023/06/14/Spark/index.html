@@ -42,7 +42,27 @@
 	
 
 	
-		
+		<hr>
+<h2 id="title-x3D-StandAloneHA搭建（张江兰）"><a href="#title-x3D-StandAloneHA搭建（张江兰）" class="headerlink" title="title&#x3D;  StandAloneHA搭建（张江兰）"></a>title&#x3D;  StandAloneHA搭建（张江兰）</h2><p>先在spark-env.sh中, 删除: SPARK_MASTER_HOST&#x3D;node1<br>原因: 配置文件中固定master是谁, 那么就无法用到zk的动态切换master功能了.</p>
+<p>在spark-env.sh中, 增加:<br><figure class="figure"><img src="/../images/1.png" alt="1"><figcaption class="figure__caption">1</figcaption></figure></p>
+<p>将spark-env.sh 分发到每一台服务器上</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp spark-env.sh node2:/export/server/spark/conf/</span><br><span class="line">scp spark-env.sh node3:/export/server/spark/conf/</span><br></pre></td></tr></table></figure>
+
+<p>停止当前standalone集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/stop-all.sh</span><br></pre></td></tr></table></figure>
+<h1 id="测试Spark-StandAloneHA"><a href="#测试Spark-StandAloneHA" class="headerlink" title="测试Spark StandAloneHA"></a>测试Spark StandAloneHA</h1><p>先在node1上启动一个master和全部的worker</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+<p>然后在node2上启动一个备用的master</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-master.sh</span><br></pre></td></tr></table></figure>
+<p><figure class="figure"><img src="/../images/2.png" alt="2"><figcaption class="figure__caption">2</figcaption></figure></p>
+<p>node1的状态是alive</p>
+<p><figure class="figure"><img src="/../images/3.png" alt="3"><figcaption class="figure__caption">3</figcaption></figure><br> node2备用master的状态是standby</p>
+<h1 id="Master主备切换"><a href="#Master主备切换" class="headerlink" title="Master主备切换"></a>Master主备切换</h1><p> 提交一个spark任务到当前alive master上：<br> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-submit --master spark://node1:7077 /export/server/spark/examples/src/main/python/pi.py 1000</span><br></pre></td></tr></table></figure><br><figure class="figure"><img src="/../images/4.png" alt="4"><figcaption class="figure__caption">4</figcaption></figure></p>
+<p>复制node1标签 kill掉node1的master<br><figure class="figure"><img src="/../images/5.png" alt="5"><figcaption class="figure__caption">5</figcaption></figure></p>
+<p>如图 可看到断开连接 静待一<br><figure class="figure"><img src="/../images/6.png" alt="6"><figcaption class="figure__caption">6</figcaption></figure></p>
+<p>当新的master接收集群后, 程序继续运行, 正常得到结果</p>
+<p>结论： HA模式下, 主备切换 不会影响到正在运行的程序.<br>最大的影响是 会让它中断大约30秒左右.</p>
+
 	
 
 	
