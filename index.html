@@ -35,7 +35,44 @@
 
 	<article>
 	
-		<h1><a href="/2023/06/14/Spark/"></a></h1>
+		<h1><a href="/2023/06/21/zookeeper/"></a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2023-06-21</span><br />
+		
+		
+	</div>
+
+	
+
+	
+		<h1 id="Zookeeper相关配置（张江兰）"><a href="#Zookeeper相关配置（张江兰）" class="headerlink" title="Zookeeper相关配置（张江兰）"></a>Zookeeper相关配置（张江兰）</h1><p>一、准备工作<br>安装前需要安装好jdk</p>
+<p>二、解压<br>在node1主机上，解压zookeeper的压缩包到&#x2F;export&#x2F;server路径下去，然后准备进行安装</p>
+<p><figure class="figure"><img src="/../images/7.png" alt="7"><figcaption class="figure__caption">7</figcaption></figure></p>
+<p>三、环境变量</p>
+<p><figure class="figure"><img src="/../images/8.png" alt="8"><figcaption class="figure__caption">8</figcaption></figure></p>
+<p>四、配置文件</p>
+<p><figure class="figure"><img src="/../images/9.png" alt="9"><figcaption class="figure__caption">9</figcaption></figure></p>
+<p>五、添加myid配置</p>
+<p><figure class="figure"><img src="/../images/10.png" alt="10"><figcaption class="figure__caption">10</figcaption></figure></p>
+<p>六、安装包分发并修改myid的值</p>
+<p><figure class="figure"><img src="/../images/11.png" alt="11"><figcaption class="figure__caption">11</figcaption></figure><br><figure class="figure"><img src="/../images/12.png" alt="12"><figcaption class="figure__caption">12</figcaption></figure></p>
+<p>七、三台机器启动zookeeper服务<br>八、编写一个脚本来批量启动所有机器</p>
+<p><figure class="figure"><img src="/../images/13.png" alt="13"><figcaption class="figure__caption">13</figcaption></figure></p>
+<p><figure class="figure"><img src="/../images/14.png" alt="14"><figcaption class="figure__caption">14</figcaption></figure></p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/2023/06/14/Spark/">StandAloneHA搭建（张江兰）</a></h1>
 	
 	<div class="article__infos">
 		<span class="article__date">2023-06-14</span><br />
@@ -46,8 +83,7 @@
 	
 
 	
-		<hr>
-<h2 id="title-x3D-StandAloneHA搭建（张江兰）"><a href="#title-x3D-StandAloneHA搭建（张江兰）" class="headerlink" title="title&#x3D;  StandAloneHA搭建（张江兰）"></a>title&#x3D;  StandAloneHA搭建（张江兰）</h2><p>先在spark-env.sh中, 删除: SPARK_MASTER_HOST&#x3D;node1<br>原因: 配置文件中固定master是谁, 那么就无法用到zk的动态切换master功能了.</p>
+		<p>先在spark-env.sh中, 删除: SPARK_MASTER_HOST&#x3D;node1<br>原因: 配置文件中固定master是谁, 那么就无法用到zk的动态切换master功能了.</p>
 <p>在spark-env.sh中, 增加:<br><figure class="figure"><img src="/../images/1.png" alt="1"><figcaption class="figure__caption">1</figcaption></figure></p>
 <p>将spark-env.sh 分发到每一台服务器上</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp spark-env.sh node2:/export/server/spark/conf/</span><br><span class="line">scp spark-env.sh node3:/export/server/spark/conf/</span><br></pre></td></tr></table></figure>

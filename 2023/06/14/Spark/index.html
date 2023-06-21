@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="theme-color" content="#33474d">
-	<title>Hexo</title>
+	<title>StandAloneHA搭建（张江兰） | Hexo</title>
 	<link rel="stylesheet" href="/css/style.css" />
 	
       <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -31,7 +31,7 @@
 	<main>
 		<article>
 	
-		<h1></h1>
+		<h1>StandAloneHA搭建（张江兰）</h1>
 	
 	<div class="article__infos">
 		<span class="article__date">2023-06-14</span><br />
@@ -42,8 +42,7 @@
 	
 
 	
-		<hr>
-<h2 id="title-x3D-StandAloneHA搭建（张江兰）"><a href="#title-x3D-StandAloneHA搭建（张江兰）" class="headerlink" title="title&#x3D;  StandAloneHA搭建（张江兰）"></a>title&#x3D;  StandAloneHA搭建（张江兰）</h2><p>先在spark-env.sh中, 删除: SPARK_MASTER_HOST&#x3D;node1<br>原因: 配置文件中固定master是谁, 那么就无法用到zk的动态切换master功能了.</p>
+		<p>先在spark-env.sh中, 删除: SPARK_MASTER_HOST&#x3D;node1<br>原因: 配置文件中固定master是谁, 那么就无法用到zk的动态切换master功能了.</p>
 <p>在spark-env.sh中, 增加:<br><figure class="figure"><img src="/../images/1.png" alt="1"><figcaption class="figure__caption">1</figcaption></figure></p>
 <p>将spark-env.sh 分发到每一台服务器上</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp spark-env.sh node2:/export/server/spark/conf/</span><br><span class="line">scp spark-env.sh node3:/export/server/spark/conf/</span><br></pre></td></tr></table></figure>
